@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
@@ -16,7 +17,7 @@ class Video(models.Model):
 		return str(self.title)
 
 	def get_absolute_url(self):
-		return reverse("videos:details", kwargs={"slug": self.slug})
+		return reverse("videos:detail", kwargs={"slug": self.slug})
 
 def pre_save_video_receiver(sender, instance, *args, **kwargs):
 	# print(sender, instance, args, kwargs)

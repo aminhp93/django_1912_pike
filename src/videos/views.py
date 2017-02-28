@@ -30,7 +30,9 @@ class VideoDetailView(DetailView):
 	# 	return get_object_or_404(Video, slug=abc)
 
 class VideoUpdateView(UpdateView):
-	queryset = Video.objects.all()
+	model = Video
+	form_class = VideoForm
 
 class VideoDeleteView(DeleteView):
 	queryset = Video.objects.all()
+	success_url = "/videos/"

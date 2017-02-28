@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ object.title }} | {{ block.super }}
+{% endblock %}
+{% block content %}
+	<div>Title: {{ object.title }}</div>
+	<div>Description: {{ object.description }}</div>
+	<div>Active: {{ object.active }}</div>
+	</div>
+{% endblock %}
