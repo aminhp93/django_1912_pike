@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # internal
+
+    # app
+    'videos',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +58,7 @@ ROOT_URLCONF = 'project_django_1912_pike.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,3 +122,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static_in_env")
+]
+
+VENV_PATH = os.path.dirname(BASE_DIR)
+print(VENV_PATH)
+
+STATIC_ROOT = os.path.join(VENV_PATH, "static_root")
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(VENV_PATH, "media_root")
