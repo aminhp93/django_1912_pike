@@ -7,6 +7,17 @@ from django.utils.text import slugify
 from videos.models import Video
 
 # Create your models here.
+class CategoryQuerySet(models.query.QuerySet):
+	def active(self):
+		return self.filter(active=True)
+
+class CategoryManager(models.Manager):
+	def get_queryset(self):
+		return CategoryQuerySet(self.model, using=self._db)
+
+	def all(self):
+		return self.get_queryset().all()
+
 class Category(models.Model):
 	video 		= models.ForeignKey(Video, null=True, blank=True)
 	title 		= models.CharField(max_length=120)
@@ -15,6 +26,8 @@ class Category(models.Model):
 	active 		= models.BooleanField(default=True)
 	updated 	= models.DateTimeField(auto_now=True)
 	timestamp 	= models.DateTimeField(auto_now_add=True)
+
+	objects = CategoryManager()
 
 	class Meta:
 		verbose_name = "Category"
