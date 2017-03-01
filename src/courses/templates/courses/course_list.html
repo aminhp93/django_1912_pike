@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} 
+Videos List | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+<div>
+	{% for course in object_list %}
+		<div>
+			<a href="{{ course.get_absolute_url }}">Title: {{ course.title }} | {{ course.id }}</a>
+		</div>
+		
+			
+		
+	{% endfor %}
+
+</div>
+{% endblock %}
