@@ -4,29 +4,52 @@ from django.views.generic import (
 	ListView, 
 	DetailView,
 	UpdateView, 
-	DeleteView
+	DeleteView,
+	RedirectView,
 	)
 
 from .forms import CourseForm
-from .models import Course
+from .models import Course, MyCourse
 
 # Create your views here.
+
+class CoursePurchaseView(RedirectView):
+	permanent = False
+
+	def get_redirect_url(self, slug=None):
+		qs = Course.objects.filter(slug=slug)#.owned(self.request.user)
+		if qs.exists():
+			user = self.request.user
+			if user.is_authenticated():
+				my_course, created = MyCourse.objects.get_or_create(user=user)
+				if created:
+					my_course.user = user
+					my_course.courses = qs
+					my_course.save()
+				else:
+					my_course = user.mycourse
+					my_course.courses.add(qs.first())
+		return "/courses/"
 
 class CourseCreateView(CreateView):
 	model = Course
 	form_class = CourseForm
 
 class CourseListView(ListView):
-	queryset = Course.objects.all()
+	
+	def get_queryset(self):
+		user = self.request.user
+		qs = Course.objects.all()
+		if user.is_authenticated():
+			qs = qs.owned(user)
+		return qs
 
 class CourseDetailView(DetailView):
 	queryset = Course.objects.all()
 
 	# def get_object(self):
 	# 	abc = self.kwargs.get("slug")
-	# 	print("test", abc)
 	# 	obj = get_object_or_404(Course, slug=abc)
-	# 	print(obj)
 	# 	return get_object_or_404(Course, slug=abc)
 
 class CourseUpdateView(UpdateView):

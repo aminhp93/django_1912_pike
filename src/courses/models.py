@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.db.models.signals import pre_save, post_save
 from django.utils.text import slugify
 
@@ -26,6 +26,19 @@ post_save.connect(post_save_user_create, sender=settings.AUTH_USER_MODEL)
 class CourseQuerySet(models.query.QuerySet):
 	def active(self):
 		return self.filter(active=True)
+
+	def owned(self, user):
+		if user.is_authenticated():
+			qs = MyCourse.objects.filter(user=user)
+		else:
+			qs = MyCourse.objects.all()
+		return self.prefetch_related(
+				Prefetch(
+					"owned",
+					queryset=qs,
+					to_attr="is_owner",
+					)
+			)
 
 class CourseManager(models.Manager):
 	def get_queryset(self):

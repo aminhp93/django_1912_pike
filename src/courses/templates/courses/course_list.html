@@ -10,10 +10,9 @@ Videos List | {{ block.super }}
 		<div>
 			<a href="{{ course.get_absolute_url }}">Title: {{ course.title }} | {{ course.id }}</a>
 		</div>
-		
-			
-		
+		<div>
+			{% if course.is_owner %} Owned {% else %} Purchase it now {% endif %}
+		</div>
 	{% endfor %}
-
 </div>
 {% endblock %}
