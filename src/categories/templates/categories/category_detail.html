@@ -4,8 +4,7 @@
 {{ object.title }} | {{ block.super }}
 {% endblock %}
 {% block content %}
-	<div>Title: {{ object.title }}</div>
-	<div>Description: {{ object.description }}</div>
-	<div>Active: {{ object.active }}</div>
-	</div>
+	<h1>Title: {{ object.title }}</h1>
+	<p>Description: {{ object.description }}</p>
+	<p>Active: {{ object.active }}</p>
 {% endblock %}

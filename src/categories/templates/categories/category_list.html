@@ -1,19 +1,7 @@
-{% extends 'base.html' %}
-{% block title %} 
-Videos List | {{ block.super }}
-{% endblock %}
-
-{% block content %}
-
-<div>
-	{% for video in object_list %}
-		<div>
-			<a href="{{ video.get_absolute_url }}">Title: {{ video.title }} | {{ video.id }}</a>
-		</div>
-		<div>
-			{{ video.embed_code|safe }}
-		</div>
-	{% endfor %}
-
-</div>
-{% endblock %}
+{% extends 'base.html' %} {% block title %} Videos List | {{ block.super }} {% endblock %} {% block content %}
+<h1>Categories List</h1>
+{% for category in object_list %}
+<h3>
+    <a href="{{ category.get_absolute_url }}">{{ category.id }} | {{ category.title }}</a>
+</h3>
+{% endfor %} {% endblock %}

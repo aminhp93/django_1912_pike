@@ -1,22 +1,14 @@
-{% extends 'base.html' %}
-{% block title %} 
-Videos List | {{ block.super }}
-{% endblock %}
+{% extends 'base.html' %} {% block title %} Courses List | {{ block.super }} {% endblock %} {% block content %}
+<h1>Courses List</h1> {% for course in object_list %}
+<h3>
+    <a href="{{ course.get_absolute_url }}">{{ course.id }} | {{ course.title }}</a>
+    <span class="pull-right">{% if course.is_owner %}
+    <button class="btn btn-default">Owned</button>
+    {% else %}
+    <button class="btn btn-success"><a style="color:white" href="{{ course.get_purchase_url }}">Purchase it now</a></button>
+    {% endif %}</span>
+</h3>
 
-{% block content %}
+    
 
-<div>
-	{% for course in object_list %}
-		<div>
-			<a href="{{ course.get_absolute_url }}">Title: {{ course.title }} | {{ course.id }}</a>
-		</div>
-		<div>
-			{% if course.is_owner %} 
-			Owned 
-			{% else %}
-			<button class="btn btn-success"><a style="color:white" href="{{ course.get_purchase_url }}">Purchase it now</a></button>
-			{% endif %}
-		</div>
-	{% endfor %}
-</div>
-{% endblock %}
+{% endfor %} {% endblock %}
