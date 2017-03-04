@@ -1,11 +1,28 @@
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import Q
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.utils.text import slugify
 
 from categories.models import Category
+
 # Create your models here.
+class MyCourse(models.Model):
+	user 		= models.OneToOneField(settings.AUTH_USER_MODEL)
+	courses 	= models.ManyToManyField("Course", related_name="owned", blank=True)
+	updated 	= models.DateTimeField(auto_now=True)
+	timestamp 	= models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return "{} | {} courses".format(str(self.user.username), str(self.courses.all().count()))
+
+def post_save_user_create(sender, instance, created, *args, **kwargs):
+	if created:
+		MyCourse.objects.get_or_create(user=instance)
+
+post_save.connect(post_save_user_create, sender=settings.AUTH_USER_MODEL)
+
 class CourseQuerySet(models.query.QuerySet):
 	def active(self):
 		return self.filter(active=True)
@@ -24,6 +41,7 @@ def handle_upload(instance, filename):
 
 
 class Course(models.Model):
+	user 		= models.ForeignKey(settings.AUTH_USER_MODEL)
 	title 		= models.CharField(max_length=120)
 	slug 		= models.SlugField(blank=True)
 	category 	= models.ForeignKey(Category, related_name="primary_category", null=True, blank=True)
