@@ -1,1 +1,10 @@
-hello
+{% extends 'base.html' %}
+{% block title %} {{ object.title }} | {{ block.super }} {% endblock %}
+{% block content %}
+{{ object }}
+<div>
+	{{ object.title }}
+	{{ object.video.embed_code|safe }}
+</div>
+
+{% endblock %}

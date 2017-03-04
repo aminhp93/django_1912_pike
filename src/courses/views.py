@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import (
 	View,
@@ -16,7 +17,20 @@ from .models import Course, MyCourse, Lecture
 
 class LectureDetailView(View):
 	def get(self, request, cslug=None, lslug=None, *args, **kwargs):
-		obj = Lecture.objects.all()
+		obj = None
+		
+		course_qs = Course.objects.filter(slug=cslug)#.lectures().owned(self.request.user)
+		# print(qs, "===", qs.lectures(), "====", qs.lectures().owned(self.request.user))
+		if not course_qs.exists():
+			raise Http404
+
+		course = course_qs.first()
+		lecture_qs = course.lecture_set.filter(slug=lslug)
+
+		if not lecture_qs.exists():
+			raise Http404
+
+		obj = lecture_qs.first()
 
 		template = "courses/lecture_detail.html"
 
