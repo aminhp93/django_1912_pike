@@ -10,7 +10,7 @@ class VideoQuerySet(models.query.QuerySet):
 		return self.filter(active=True)
 
 	def unused(self):
-		return self.filter(Q(category__isnull=True))
+		return self.filter(Q(category__isnull=True)&Q(lecture__isnull=True))
 
 class VideoManager(models.Manager):
 	def get_queryset(self):

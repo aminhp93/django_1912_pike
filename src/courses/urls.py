@@ -6,6 +6,7 @@ from .views import (
 		CourseUpdateView,
 		CourseDeleteView,
 		CoursePurchaseView,
+		LectureDetailView,
 	)
 
 urlpatterns = [
@@ -15,5 +16,6 @@ urlpatterns = [
 	url(r'^(?P<slug>[\w-]+)/purchase/$', CoursePurchaseView.as_view(), name="purchase"),
 	url(r'^(?P<slug>[\w-]+)/update/$', CourseUpdateView.as_view(), name="update"),
 	url(r'^(?P<slug>[\w-]+)/delete/$', CourseDeleteView.as_view(), name="delete"),
+	url(r'^(?P<cslug>[\w-]+)/(?P<lslug>[\w-]+)/$', LectureDetailView.as_view(), name="lecture-detail"),
 
 ]

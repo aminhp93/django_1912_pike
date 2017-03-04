@@ -5,4 +5,11 @@
 {% endblock %}
 {% block content %}
 	<div>{{ object.title }}</div>
+	<div>
+		{% for lecture in course.lecture_set.all %}
+			<div>
+				<a href="{{ lecture.get_absolute_url }}">{{ lecture }}</a>
+			</div>
+		{% endfor %}
+	</div>
 {% endblock %}

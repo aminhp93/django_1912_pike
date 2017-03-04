@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import (
+	View,
 	CreateView,
 	ListView, 
 	DetailView,
@@ -9,9 +10,22 @@ from django.views.generic import (
 	)
 
 from .forms import CourseForm
-from .models import Course, MyCourse
+from .models import Course, MyCourse, Lecture
 
 # Create your views here.
+
+class LectureDetailView(View):
+	def get(self, request, cslug=None, lslug=None, *args, **kwargs):
+		obj = Lecture.objects.all()
+
+		template = "courses/lecture_detail.html"
+
+		context = {
+			"object": obj
+		}
+
+		return render(request, template, context)
+
 
 class CoursePurchaseView(RedirectView):
 	permanent = False

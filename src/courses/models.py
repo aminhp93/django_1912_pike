@@ -6,6 +6,7 @@ from django.db.models.signals import pre_save, post_save
 from django.utils.text import slugify
 
 from categories.models import Category
+from videos.models import Video
 
 # Create your models here.
 class MyCourse(models.Model):
@@ -81,6 +82,9 @@ class Course(models.Model):
 	def get_absolute_url(self):
 		return reverse("courses:detail", kwargs={"slug": self.slug})
 
+	def get_purchase_url(self):
+		return reverse("courses:purchase", kwargs={"slug": self.slug})
+
 
 def pre_save_course_receiver(sender, instance, *args, **kwargs):
 	# print(sender, instance, args, kwargs)
@@ -88,3 +92,36 @@ def pre_save_course_receiver(sender, instance, *args, **kwargs):
 		instance.slug = slugify(instance.title)
 
 pre_save.connect(pre_save_course_receiver, sender=Course)
+
+class Lecture(models.Model):
+	course 		= models.ForeignKey(Course)
+	video 		= models.ForeignKey(Video)
+	title 		= models.CharField(max_length=120)
+	slug 		= models.SlugField(blank=True)
+	free 		= models.BooleanField(default=True)
+	description = models.TextField()
+	updated 	= models.DateTimeField(auto_now=True)
+	timestamp 	= models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		ordering = ["title"]
+
+	def __str__(self):
+		return str(self.title)
+
+	def get_absolute_url(self):
+		return reverse("courses:lecture-detail", kwargs={"cslug": self.course.slug, "lslug": self.slug})
+
+def pre_save_lecture_receiver(sender, instance, *args, **kwargs):
+	if not instance.slug:
+		instance.slug = slugify(instance.title)
+
+pre_save.connect(pre_save_lecture_receiver, sender=Lecture)
+
+
+
+
+
+
+
+

@@ -11,7 +11,11 @@ Videos List | {{ block.super }}
 			<a href="{{ course.get_absolute_url }}">Title: {{ course.title }} | {{ course.id }}</a>
 		</div>
 		<div>
-			{% if course.is_owner %} Owned {% else %} Purchase it now {% endif %}
+			{% if course.is_owner %} 
+			Owned 
+			{% else %}
+			<button class="btn btn-success"><a style="color:white" href="{{ course.get_purchase_url }}">Purchase it now</a></button>
+			{% endif %}
 		</div>
 	{% endfor %}
 </div>
