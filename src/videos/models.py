@@ -17,7 +17,7 @@ class VideoManager(models.Manager):
 		return VideoQuerySet(self.model, using=self._db)
 
 	def all(self):
-		return self.get_queryset().all().unused()
+		return self.get_queryset().all()
 
 class Video(models.Model):
 	embed_code 		= models.TextField()

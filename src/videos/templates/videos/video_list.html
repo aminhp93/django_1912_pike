@@ -1,21 +1,32 @@
-{% extends 'base.html' %}
-{% block title %} 
-Videos List | {{ block.super }}
-{% endblock %}
-
-{% block content %}
-
+{% extends 'base.html' %} {% block title %} Videos List | {{ block.super }} {% endblock %} {% block content %}
+<h1>Videos List</h1> {% if is_paginated %}
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        
+        <li><a href="{% url 'videos:list' %}?page=1">First</a></li>
+        {% if page_obj.has_previous %}
+        <li>
+            <a href="{% url 'videos:list' %}?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        <li><a href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+        {% if page_obj.has_next %}
+        <li>
+            <a href="{% url 'videos:list' %}?page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        <li><a href="{% url 'videos:list' %}?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+    </ul>
+</nav>
+{% endif %} {% for video in object_list %}
+<h3>
+	<a href="{{ video.get_absolute_url }}">{{ video.id }} | {{ video.title }} </a>
+</h3>
 <div>
-	{% for video in object_list %}
-		<div>
-			<a href="{{ video.get_absolute_url }}">Title: {{ video.title }} | {{ video.id }}</a>
-		</div>
-		<div>
-			{{ video.embed_code|safe }}
-		</div>
-		
-		<video controls="" autoplay="" name="media" style="max-width: 100%; max-height: 100%;"><div pseudo="-webkit-media-controls"><div pseudo="-webkit-media-text-track-container" class="hidden" style="display: none;"></div><button pseudo="-webkit-media-show-controls" aria-label="Show Controls"></button><div pseudo="-webkit-media-controls-wireless-playback-status" aria-label="Video Playback Placeholder" class="hidden"><div pseudo="-webkit-media-controls-wireless-playback-text"><p pseudo="-webkit-media-controls-wireless-playback-text-top"></p><p pseudo="-webkit-media-controls-wireless-playback-text-bottom"></p></div></div><div pseudo="-webkit-media-controls-panel" aria-label="Video Playback" role="toolbar" class="paused"><div pseudo="-webkit-media-controls-panel-background-container"><div pseudo="-webkit-media-controls-panel-background" class="paused"></div><div pseudo="-webkit-media-controls-panel-tint"></div></div><button pseudo="-webkit-media-controls-play-button" aria-label="Play" class="paused"></button><button pseudo="-webkit-media-controls-rewind-button" aria-label="Rewind 30 Seconds"></button><div pseudo="-webkit-media-controls-status-display" class="hidden"></div><div pseudo="-webkit-media-controls-timeline-container"><div pseudo="-webkit-media-controls-current-time-display" aria-label="Elapsed" role="timer" class="three-digit-time">00:00</div><div class="thumbnail-track"><input pseudo="-webkit-media-controls-timeline" aria-label="Duration" type="range" step="0.01" style="background-image: -webkit-canvas(_webkit-media-controls-timeline-e34e6bc9-a65c-4129-a241-24d44617c571);" min="0" max="95.16666666666667" class=""><div class="thumbnail hidden"><img class="thumbnail-image"></div></div><div pseudo="-webkit-media-controls-time-remaining-display" aria-label="Remaining" role="timer" class="three-digit-time">-01:34</div></div><div class="mute-box"><div pseudo="-webkit-media-controls-volume-slider-container" class="volume-box"><div pseudo="-webkit-media-controls-volume-slider-container-background"></div><div pseudo="-webkit-media-controls-volume-slider-container-tint"></div><input pseudo="-webkit-media-controls-volume-slider" aria-label="Volume" type="range" min="0" max="1" step="0.01" style="background-image: -webkit-canvas(_webkit-media-controls-volume-4b62bd34-e3b7-407d-a1e1-9d4e637269b9);"></div><button pseudo="-webkit-media-controls-mute-button" aria-label="Mute"></button></div><button pseudo="-webkit-media-controls-wireless-playback-picker-button" aria-label="Choose Wireless Display" class="hidden" style="background-image: url('data:image/svg+xml,&lt;svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 15\' stroke=\'rgba(255,255,255,0.45)\'&gt;&lt;defs&gt; &lt;clipPath fill-rule=\'evenodd\' id=\'cut-hole\'&gt;&lt;path d=\'M 0,0.5 L 16,0.5 L 16,15.5 L 0,15.5 z M 0,14.5 L 16,14.5 L 8,5 z\'/&gt;&lt;/clipPath&gt;&lt;/defs&gt;&lt;rect fill=\'none\' clip-path=\'url(#cut-hole)\' x=\'0.5\' y=\'2\' width=\'15\' height=\'8\'/&gt;&lt;path stroke=\'none\' fill=\'rgba(255,255,255,0.45)\' d=\'M 3.5,13.25 L 12.5,13.25 L 8,8 z\'/&gt;&lt;/svg&gt;');"></button><button pseudo="-webkit-media-controls-toggle-closed-captions-button" aria-label="Captions" aria-haspopup="true" aria-owns="audioAndTextTrackMenu" class="hidden"></button><button pseudo="-webkit-media-controls-fullscreen-button" aria-label="Display Full Screen" class=""></button></div></div><source src="{{ video.embed_code }}" type="video/mp4"></video>
-	{% endfor %}
-
+    {{ video.embed_code|safe }}
 </div>
-{% endblock %}
+{% endfor %} {% endblock %}

@@ -17,7 +17,14 @@ class VideoCreateView(CreateView):
 	form_class = VideoForm
 
 class VideoListView(ListView):
+	paginate_by = 4
+
 	queryset = Video.objects.all()
+
+	def get_context_data(self, *args, **kwargs):
+		context = super().get_context_data(*args, **kwargs)
+		print(context, dir(context))
+		return context
 
 class VideoDetailView(DetailView):
 	queryset = Video.objects.all()
