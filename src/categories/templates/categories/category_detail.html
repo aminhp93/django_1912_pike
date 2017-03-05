@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
-
-{% block title %}
-{{ object.title }} | {{ block.super }}
-{% endblock %}
-{% block content %}
-	<h1>Title: {{ object.title }}</h1>
-	<p>Description: {{ object.description }}</p>
-	<p>Active: {{ object.active }}</p>
+{% extends 'base.html' %} {% block title %} {{ object.title }} | {{ block.super }} {% endblock %} {% block content %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'home' %}">Home</a></li>
+  <li><a href="{% url 'categories:list' %}">Categories</a></li>
+  <li class="active">{{ object.title }}</li>
+</ol>
+<h1>Title: {{ object.title }}</h1>
+<p>Description: {{ object.description }}</p>
+<p>Active: {{ object.active }}</p>
 {% endblock %}

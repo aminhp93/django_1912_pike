@@ -28,6 +28,9 @@ class CourseQuerySet(models.query.QuerySet):
 	def active(self):
 		return self.filter(active=True)
 
+	def featured(self):
+		return self.filter(Q(secondary__slug__iexact='featured'))
+
 	def lectures(self):
 		return self.prefetch_related(
 				'lecture_set'

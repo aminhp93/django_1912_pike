@@ -63,6 +63,12 @@ class CourseCreateView(CreateView):
 	model = Course
 	form_class = CourseForm
 
+	def form_valid(self, form):
+		obj = form.save(commit=False)
+		obj.user = self.request.user
+		obj.save()
+		return super().form_valid(form)
+
 class CourseListView(ListView):
 	
 	def get_queryset(self):

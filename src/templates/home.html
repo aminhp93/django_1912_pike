@@ -1,17 +1,21 @@
 {% extends 'base.html' %} {% block content %}
-<div class="container">
+<div class="col-sm-12">
+    <h1>Hello, {{ user }}</h1>
+    <h3>Learn your stuff in an easier way</h3>
+    <h3>View:
+        <a href="">LATEST</a> | 
+        <a href="/courses/farm-cup/">FARM TO CUP</a> | 
+        <a href="/courses/how/">HOW TO</a> | 
+        <a href="/courses/recipes/">RECIPES</a> | 
+        <a href="/courses/taste-drink/">TASTE & DRINKS</a>
+    </h3>
+    <h1>Feature Courses</h1>
     <div class="row">
-        <div class="col-sm-12">
-            <h1>Hello, {{ user }}</h1>
-            <h3>Learn your stuff in an easier way</h3>
-            <h3>View:
-            	<a href="">LATEST</a> | 
-            	<a href="/courses/farm-cup/">FARM TO CUP</a> | 
-            	<a href="/courses/how/">HOW TO</a> | 
-            	<a href="/courses/recipes/">RECIPES</a> | 
-            	<a href="/courses/taste-drink/">TASTE & DRINKS</a>
-            </h3>
+        {% for course in qs %}
+        <div class="col-md-4">
+            <a href="{{ course.get_absolute_url }}"><img src="{{ course.image.url }}" alt="" class="img-responsive"></a>
         </div>
+        {% empty %} No featured courses. {% endfor %}
     </div>
 </div>
 {% endblock %}

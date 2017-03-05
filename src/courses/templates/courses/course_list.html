@@ -1,14 +1,15 @@
 {% extends 'base.html' %} {% block title %} Courses List | {{ block.super }} {% endblock %} {% block content %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'home' %}">Home</a></li>
+  <li class="active">Courses</li>
+</ol>
 <h1>Courses List</h1> {% for course in object_list %}
 <h3>
-    <a href="{{ course.get_absolute_url }}">{{ course.id }} | {{ course.title }}</a>
+    <a href="{{ course.get_absolute_url }}">{{ course.id }} | {{ course.title }}</a> - {{ course.lecture_set.all.count }} {% if course.lecture_set.all.count > 1 %} Lectures {% else %} Lecture {% endif %}
     <span class="pull-right">{% if course.is_owner %}
-    <button class="btn btn-default">Owned</button>
+    <button class="btn btn-info">Owned</button>
     {% else %}
-    <button class="btn btn-success"><a style="color:white" href="{{ course.get_purchase_url }}">Purchase it now</a></button>
+    <button class="btn btn-success"><a style="color:white" href="{{ course.get_purchase_url }}">Purchase now - ${{ course.price }}</a></button>
     {% endif %}</span>
 </h3>
-
-    
-
 {% endfor %} {% endblock %}

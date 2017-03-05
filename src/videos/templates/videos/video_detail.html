@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
-
-{% block title %}
-{{ object.title }} | {{ block.super }}
-{% endblock %}
-{% block content %}
-	<div>{{ object.title }}</div>
-	<div>{{ object.embed_code|safe }}</div>
+{% extends 'base.html' %} {% block title %} {{ object.title }} | {{ block.super }} {% endblock %} {% block content %}
+<ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'videos:list' %}">Videos</a></li>
+    <li class="active">{{ object.title }}</li>
+</ol>
+<h1>{{ object.title }}</h1>
+<div>{{ object.embed_code|safe }}</div>
 {% endblock %}

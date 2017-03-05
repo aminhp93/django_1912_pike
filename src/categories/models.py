@@ -1,6 +1,7 @@
 
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Count
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 
@@ -16,7 +17,10 @@ class CategoryManager(models.Manager):
 		return CategoryQuerySet(self.model, using=self._db)
 
 	def all(self):
-		return self.get_queryset().all()
+		return self.get_queryset().all().active(
+			).annotate(
+				courses_length=Count("secondary_category", distinct=True)
+			).prefetch_related("primary_category", "secondary_category")
 
 class Category(models.Model):
 	video 		= models.ForeignKey(Video, null=True, blank=True)

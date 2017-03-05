@@ -1,10 +1,20 @@
 {% extends 'base.html' %} {% block title %} {{ object.title }} | {{ block.super }} {% endblock %} {% block content %}
-<h1>{{ object.title }}</h1>
-<div>
-	<img src="{{ object.image.url }}" alt="" class="img-responsive">
+<ol class="breadcrumb">
+  <li><a href="{% url 'home' %}">Home</a></li>
+  <li><a href="{% url 'courses:list' %}">Courses</a></li>
+  <li class="active">{{ object.title }}</li>
+</ol>
+<div class="row">
+    <div class="col-sm-6">
+        <h1>{{ object.title }}</h1>
+        <p>Description: {{ object.description }}</p>
+    </div>
+    <div class="col-sm-6">
+        {% if object.image %}
+        <img src="{{ object.image.url }}" alt="" class="img-responsive"> {% endif %}
+    </div>
 </div>
 <h3 class="list-group">
     {% for lecture in course.lecture_set.all %}
     <a class="list-group-item" href="{{ lecture.get_absolute_url }}">{{ lecture }}</a>{% endfor %}
-</h3>
-{% endblock %}
+</h3> {% endblock %}
