@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'smtp.sendgrid.com'
+EMAIL_HOST_USER = 'amin' #hello@teamcfe.com
+EMAIL_MAIN = 'minhpn.org.ec@gmail.com'
+EMAIL_HOST_PASSWORD = 'miamikki521'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Application definition
 
@@ -35,15 +41,35 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # internal
     'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     # app
     'categories',
     'courses',
     'videos',
 ]
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+LOGIN_REDIRECT_URL = "/"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
@@ -139,3 +165,5 @@ STATIC_ROOT = os.path.join(VENV_PATH, "static_root")
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(VENV_PATH, "media_root")
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

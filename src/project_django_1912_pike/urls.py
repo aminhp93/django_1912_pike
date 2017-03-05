@@ -22,6 +22,7 @@ from .views import HomeView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^categories/', include('categories.urls', namespace='categories')),
     url(r'^courses/', include('courses.urls', namespace='courses')),
     url(r'^videos/', include('videos.urls', namespace='videos')),
