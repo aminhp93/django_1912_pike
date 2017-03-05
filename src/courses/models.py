@@ -106,7 +106,7 @@ class Lecture(models.Model):
 	video 		= models.ForeignKey(Video)
 	title 		= models.CharField(max_length=120)
 	slug 		= models.SlugField(blank=True)
-	free 		= models.BooleanField(default=True)
+	free 		= models.BooleanField(default=False)
 	description = models.TextField()
 	updated 	= models.DateTimeField(auto_now=True)
 	timestamp 	= models.DateTimeField(auto_now_add=True)

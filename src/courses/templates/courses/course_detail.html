@@ -6,7 +6,11 @@
 </ol>
 <div class="row">
     <div class="col-sm-6">
-        <h1>{{ object.title }}</h1>
+        <h1>{{ object.title }} 
+        {% if not object.is_owner %}
+        <a href="" class="btn btn-success">Purchase - ${{ object.price }}</a>
+        {% endif %}
+        </h1>
         <p>Description: {{ object.description }}</p>
     </div>
     <div class="col-sm-6">
@@ -16,5 +20,5 @@
 </div>
 <h3 class="list-group">
     {% for lecture in course.lecture_set.all %}
-    <a class="list-group-item" href="{{ lecture.get_absolute_url }}">{{ lecture }}</a>{% endfor %}
+    <a class="list-group-item" {% if object.is_owner or lecture.free %} href="{{ lecture.get_absolute_url }}" {% endif %}>{{ lecture }}{% if lecture.free %} - <small>Free Preview</small> {% endif %}</a>{% endfor %}
 </h3> {% endblock %}

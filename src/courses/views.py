@@ -81,10 +81,14 @@ class CourseListView(ListView):
 class CourseDetailView(DetailView):
 	queryset = Course.objects.all()
 
-	# def get_object(self):
-	# 	abc = self.kwargs.get("slug")
-	# 	obj = get_object_or_404(Course, slug=abc)
-	# 	return get_object_or_404(Course, slug=abc)
+	def get_object(self):
+		slug = self.kwargs.get("slug")
+		qs = Course.objects.filter(slug=slug).lectures().owned(self.request.user)
+		print(qs, "test")
+		if qs.exists():
+			obj = qs.first()
+			return obj
+		raise Http404
 
 class CourseUpdateView(UpdateView):
 	model = Course
