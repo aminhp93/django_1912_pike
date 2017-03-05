@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^categories/', include('categories.urls', namespace='categories')),
     url(r'^courses/', include('courses.urls', namespace='courses')),
     url(r'^videos/', include('videos.urls', namespace='videos')),
+    url(r'^search/', include('search.urls', namespace='search')),
 ]
 
 if settings.DEBUG:

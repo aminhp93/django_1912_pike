@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load search_form %}
+{% block title %}
+Search | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+
+</div>
+{% if request.GET.q %}
+<h1>Result</h1>
+<h3>Categories:</h3> 
+{% if c_qs %}
+{% for category in c_qs %}
+	{{ category }}
+{% endfor %}
+{% else %}
+	No category found
+{% endif %}
+<hr>
+<h3>Courses: </h3>
+{% if qs %}
+{% for course in qs %}
+	{{ course }}
+{% endfor %}
+{% else %}
+	No course found
+{% endif %}
+<hr>
+<h3>Lectures: </h3>
+{% if l_qs %}
+{% for lecture in l_qs %}
+	{{ lecture }}
+{% endfor %}
+{% else %}
+	No lecture found.
+{% endif %}
+<hr>
+{% else %}
+<h1>Please insert the search field.</h1>
+{% endif %}
+
+
+{% endblock %}

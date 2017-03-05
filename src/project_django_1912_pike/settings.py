@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'categories',
     'courses',
     'videos',
+    'search',
 ]
 
 SITE_ID = 1
