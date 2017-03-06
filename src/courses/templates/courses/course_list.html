@@ -9,7 +9,7 @@
     <span class="pull-right">{% if course.is_owner %}
     <button class="btn btn-info">Owned</button>
     {% else %}
-    <button class="btn btn-success"><a style="color:white" href="{{ course.get_purchase_url }}">Purchase now - ${{ course.price }}</a></button>
+    <button class="btn btn-success"><a style="color:white" href="{% url 'order-list' %}">Purchase now - ${{ course.price }}</a></button>
     {% endif %}</span>
 </h3>
 {% endfor %} {% endblock %}

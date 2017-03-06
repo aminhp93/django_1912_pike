@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block content %} {% for brand in object_list %}
+<h3>
+    {{ brand.title }}
+    {% if brand.image %}<img src="{{ brand.image.url }}" alt="">{% endif %}
+    <button class="btn btn-success pull-right"><a href="{{ brand.link }}">Shop Now</a></button>
+</h3>
+{% endfor %} {% endblock %}

@@ -52,8 +52,10 @@ INSTALLED_APPS = [
     # app
     'categories',
     'courses',
-    'videos',
+    'orders',
     'search',
+    'shopping',
+    'videos',
 ]
 
 SITE_ID = 1
@@ -168,3 +170,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(VENV_PATH, "media_root")
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+BRAINTREE_MERCHANT_ID = "gf7vc7vvr5ttnby8"
+BRAINTREE_PUBLIC_KEY = "xdm372xh9cyj8p4n"
+BRAINTREE_PRIVATE_KEY = "ac011869ffcf8f1c03a3b5696c5ebc8a"
+BRAINTREE_ENVIRONMENT = "Sandbox"
