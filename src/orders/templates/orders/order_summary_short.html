@@ -1,0 +1,21 @@
+<div>
+	<p>Your order</p>
+	<table class="table">
+		<tr>
+			<td>{{ object.cart.cartitem_set.count }} items
+			{% for item in object.cart.cartitem_set.all %}
+				<b>{{ item }}</b>
+			{% endfor %}
+			</td>
+		</tr>
+		<tr>
+			<td>Sub total: {{ object.cart.subtotal }} </td>
+		</tr>
+		<tr>
+			<td>Tax: {{ object.cart.tax_total }}</td>
+		</tr>
+		<tr>
+			<td>Order Total: {{ object.cart.total }}</td>
+		</tr>
+	</table>
+</div>

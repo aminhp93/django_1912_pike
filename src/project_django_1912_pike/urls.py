@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^search/', include('search.urls', namespace='search')),
     url(r'^shopping/', include('shopping.urls', namespace='shopping')),
     url(r'^videos/', include('videos.urls', namespace='videos')),
+    url(r'^orders/', include('orders.urls', namespace='orders')),
     url(r'^carts/$', CartView.as_view(), name='carts'),
     url(r'^checkout/$', CheckoutView.as_view(), name='checkout'),
 

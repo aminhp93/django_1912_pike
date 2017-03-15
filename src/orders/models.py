@@ -1,4 +1,4 @@
-
+from django.shortcuts import reverse
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save, pre_save
@@ -67,6 +67,9 @@ class Order(models.Model):
 
 	def __str__(self):
 		return str(self.cart.id)
+
+	def get_absolute_url(self):
+		return reverse("orders:detail", kwargs={"pk": self.pk})
 
 def order_pre_save(sender, instance, *args, **kwargs):
 	

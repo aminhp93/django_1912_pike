@@ -4,8 +4,10 @@ Checkout | {{ block.super }}
 {% endblock %}
 {% block content %}
 {{ client_token }}
+{{ order }}
 <div>
-	<h1>Your order</h1>
+	<h1>Checkout - Your order</h1>
+	{% include 'orders/order_summary_short.html' with object=order %}
 </div>
 {% endblock %}
 

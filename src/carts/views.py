@@ -3,6 +3,7 @@ from django.views.generic import View, DetailView
 
 from courses.models import Course
 from orders.models import UserCheckout
+from orders.mixins import CartOrderMixin
 
 from .models import Cart, CartItem
 
@@ -29,10 +30,7 @@ class CartView(View):
 
 	def get(self, request, *args, **kwargs):
 		cart = self.get_object()
-		print(request, "line 25")
-		print(request.GET)
 		item_id = request.GET.get("item")
-		print(item_id, "line 27")
 
 		if item_id:
 			item_instance = get_object_or_404(Course, id=item_id)
@@ -50,7 +48,7 @@ class CartView(View):
 		return render(request, template, context)
 
 
-class CheckoutView(DetailView):
+class CheckoutView(DetailView, CartOrderMixin):
 	model = Cart
 	template_name = "carts/checkout_view.html"
 
@@ -73,7 +71,24 @@ class CheckoutView(DetailView):
 		else:
 			pass
 
+		if self.get_cart() is not None:
+			context["order"] = self.get_order()
+
 		return context
+
+	def get(self, request, *args, **kwargs):
+		get_data = super().get(request, *args, **kwargs)
+		cart = self.get_object()
+		if cart == None:
+			return redirect("carts")
+		new_order = self.get_order()
+		user_checkout_id = request.session.get("user_checkout_id")
+		if user_checkout_id != None:
+			user_checkout = UserCheckout.objects.get(id=user_checkout_id)
+			new_order.user = user_checkout
+			new_order.save()
+
+		return get_data
 
 
 

@@ -21,4 +21,4 @@ class CartOrderMixin(object):
 			return None
 
 		cart = Cart.objects.get(id=cart_id)
-		return Cart
+		return cart
