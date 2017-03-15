@@ -19,7 +19,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from .views import HomeView
 
-from carts.views import CartView, CheckoutView
+from carts.views import CartView, CheckoutView, CheckoutFinalView
 
 
 urlpatterns = [
@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^orders/', include('orders.urls', namespace='orders')),
     url(r'^carts/$', CartView.as_view(), name='carts'),
     url(r'^checkout/$', CheckoutView.as_view(), name='checkout'),
+    url(r'^checkout/final/$', CheckoutFinalView.as_view(), name='checkout_final'),
 
 ]
 

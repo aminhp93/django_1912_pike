@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View, DetailView
 
@@ -8,6 +9,13 @@ from orders.mixins import CartOrderMixin
 from .models import Cart, CartItem
 
 
+import braintree
+
+if settings.DEBUG:
+	braintree.Configuration.configure(braintree.Environment.Sandbox,
+                                  merchant_id=settings.BRAINTREE_MERCHANT_ID,
+                                  public_key=settings.BRAINTREE_PUBLIC_KEY,
+                                  private_key=settings.BRAINTREE_PRIVATE_KEY)
 
 # Create your views here.
 class CartView(View):
@@ -90,7 +98,26 @@ class CheckoutView(DetailView, CartOrderMixin):
 
 		return get_data
 
+class CheckoutFinalView(CartOrderMixin, View):
+	def get(self, request, *args, **kwargs):
+		print("get")
+		return redirect("checkout")
 
+	def post(self, request, *args, **kwargs):
+		print("post")
+		print(request.POST)
+		order = self.get_order()
+		nonce = request.POST.get("payment_method_nonce")
+		print(nonce)
+		if nonce:
+			result = braintree.Transaction.sale({
+			    "amount": "10.00",
+			    "payment_method_nonce": nonce,
+			    "options": {
+			        "submit_for_settlement": True
+			    }
+			})
+		return redirect("orders:detail", pk=order.pk)
 
 
 
