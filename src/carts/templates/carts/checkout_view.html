@@ -1,2 +1,11 @@
-checkout view
+{% extends 'base.html' %}
+{% block title %}
+Checkout | {{ block.super }}
+{% endblock %}
+{% block content %}
+{{ client_token }}
+<div>
+	<h1>Your order</h1>
+</div>
+{% endblock %}
 

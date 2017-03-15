@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View, DetailView
 
 from courses.models import Course
+from orders.models import UserCheckout
 
 from .models import Cart, CartItem
+
 
 
 # Create your views here.
@@ -63,7 +65,14 @@ class CheckoutView(DetailView):
 		context = super().get_context_data(*args, **kwargs)
 
 		if self.request.user.is_authenticated():
-			
+			user_checkout, created = UserCheckout.objects.get_or_create(email=self.request.user.email)
+			user_checkout.user = self.request.user
+			user_checkout.save()
+			context["client_token"] = user_checkout.get_client_token()
+			self.request.session['user_checkout_id'] = user_checkout.id
+		else:
+			pass
+
 		return context
 
 
