@@ -19,7 +19,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from .views import HomeView
 
-from orders.views import OrderList, OrderDetail
+from carts.views import CartView, CheckoutView
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,11 +28,12 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^categories/', include('categories.urls', namespace='categories')),
     url(r'^courses/', include('courses.urls', namespace='courses')),
-    url(r'^orders/$', OrderList.as_view(), name='order-list'),
-    url(r'^orders/(?P<pk>\d+)/$', OrderDetail.as_view(), name='order-detail'),
     url(r'^search/', include('search.urls', namespace='search')),
     url(r'^shopping/', include('shopping.urls', namespace='shopping')),
     url(r'^videos/', include('videos.urls', namespace='videos')),
+    url(r'^carts/$', CartView.as_view(), name='carts'),
+    url(r'^checkout/$', CheckoutView.as_view(), name='checkout'),
+
 ]
 
 if settings.DEBUG:

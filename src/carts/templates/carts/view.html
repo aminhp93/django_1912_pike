@@ -1,0 +1,46 @@
+{% extends 'base.html' %} {% block content %} cart view ID = {{ object }} 
+<table class="table">
+{% for item in object.cartitem_set.all %} 
+    <tr>
+        <td>
+            {{ item }}
+        </td>
+        <td>
+            <form action=".">
+                <input type="text" name="item" value="{{ item.id }}">
+                <input type="number" name="quantity" value="{{ item.quantity }}">
+                <input type="submit" value="Update Item" style="display:none">
+            </form>
+        </td>
+        <td>
+        	{{ item.line_total_item }}
+        </td>
+        <td class="text-right" colspan="4">
+        	<a href="">Remove</a>
+        </td>
+    </tr>
+
+{% endfor %} 
+	<tr>
+		<td class="text-right" colspan="4">
+			<span>Subtotal: {{ object.subtotal }}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="text-right" colspan="4">
+			<span>Tax - {{ object.tax_percentage }}%: {{ object.tax_total }}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="text-right" colspan="4">
+			<span>Total: {{ object.total }}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="text-right" colspan="4">
+			<a href="">Checkout</a>
+		</td>
+	</tr>
+
+</table>
+{% endblock %}

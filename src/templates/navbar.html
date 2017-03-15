@@ -16,6 +16,7 @@
       </form> -->
       {% search_form request False %}
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'carts' %}">Cart</a></li>
         <li><a href="{% url 'shopping:list' %}">Shopping</a></li>
         <li><a href="{% url 'videos:list' %}">Videos</a></li>
         <li><a href="{% url 'courses:list' %}">Courses</a></li>
